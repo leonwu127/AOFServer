@@ -1,46 +1,78 @@
-﻿using Xunit;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using Xunit;
 using Moq;
-using System.Net;
-using System.IO;
 using ArmyServer.Controllers;
+using ArmyServer.Utilities.HttpListenserWrapper;
+using System.Net;
+using System.Security.Principal;
+using ArmyServer.Services.Auth;
+using System.Text.Json;
 using ArmyServer.Models;
+using ArmyServer.Services.Auth.Provider;
+using ArmyServer.Data;
+using ArmyServer.Utilities;
 
 namespace ArmyServer.Tests
 {
     public class AuthenticationControllerTests
     {
-        private readonly Mock<HttpListenerRequest> _requestMock;
-        private readonly Mock<HttpListenerResponse> _responseMock;
+        private readonly Mock<IHttpListenerRequestWrapper> _requestMock;
+        private readonly Mock<IHttpListenerResponseWrapper> _responseMock;
         private readonly AuthenticationController _controller;
+        private const GameTitle GameTitle = Models.GameTitle.ArmyofTactics;
+        private const Platform Platform = Models.Platform.iOS;
+        private readonly Uri _url = new Uri("http://localhost:8080/ArmyofTactics/login");
+        private const string PlayerId = "player_id";
+        private static readonly string Token = TokenUtility.GenerateToken(PlayerId);
+
 
         public AuthenticationControllerTests()
         {
-            // Mocking HttpListenerRequest and HttpListenerResponse, more setup might be needed depending on your tests.
-            _requestMock = new Mock<HttpListenerRequest>();
-            _responseMock = new Mock<HttpListenerResponse>();
-
-            // If AuthenticationController has dependencies, they need to be mocked and passed to the constructor as well.
-            _controller = new AuthenticationController(/* dependencies */);
+            _requestMock = new Mock<IHttpListenerRequestWrapper>();
+            _responseMock = new Mock<IHttpListenerResponseWrapper>();
+            _controller = new AuthenticationController();
+            PlayersData.Add(new Player(PlayerId));
         }
 
         [Fact]
-        public void GuestRegister_ValidRequest_CreatesAccount()
+        public void Login_WithValidCredentials_ShouldReturnToken()
         {
             // Arrange
-            // Set up your mocks, including the request and response objects and any methods they should call.
-            // For instance, if your method relies on the request's InputStream, you'd set that up here.
+            var authRequest = new AuthRequest
+            {
+                Provider = new Dictionary<string, AuthCredential>
+                {
+                    { "Guest", new AuthCredential(PlayerId, Token)}
+                }
+            };
+            var requestBody = JsonSerializer.Serialize(authRequest);
+            var requestStream = new MemoryStream(Encoding.UTF8.GetBytes(requestBody));
+            _requestMock.Setup(req => req.Url).Returns(_url);
+            _requestMock.Setup(req => req.Headers).Returns(new WebHeaderCollection
+            {
+                { "platform", Platform.ToString() }
+            });
+            _requestMock.Setup(req => req.InputStream).Returns(requestStream);
+            _requestMock.Setup(req => req.ContentEncoding).Returns(Encoding.UTF8);
+
+            // You might need to set up more properties of the request based on how they're used in your Login method
+
+            // Prepare the response mock to capture the response data for verification
+            var responseStream = new MemoryStream();
+            _responseMock.Setup(resp => resp.OutputStream).Returns(responseStream);
 
             // Act
-            // Call your method under test.
-            _controller.GuestRegister(_requestMock.Object, _responseMock.Object);
+            _controller.Login(_requestMock.Object, _responseMock.Object);
 
             // Assert
-            // Verify the expected results, such as checking the response object for expected status codes or headers.
-            // For instance, if your method sets a certain status code in the response upon success, you'd check that here.
+            responseStream.Position = 0;
+            var reader = new StreamReader(responseStream);
+            var jsonResponse = reader.ReadToEnd();
+            Assert.Contains("token", jsonResponse); // Adjust based on how your token is included in the response
         }
-
-        // More tests...
-        // You would create additional test methods for other scenarios, such as invalid requests, exceptions, etc.
     }
-
 }

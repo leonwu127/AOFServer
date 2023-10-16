@@ -105,3 +105,5 @@ D:\Projects\TakeHomeTasks\z3bro\ArmyServer.Tests\bin\Debug\net6.0\appsettings.js
 D:\Projects\TakeHomeTasks\z3bro\ArmyServer.Tests\bin\Debug\net6.0\ArmyServer.exe
 D:\Projects\TakeHomeTasks\z3bro\ArmyServer.Tests\bin\Debug\net6.0\ArmyServer.dll
 D:\Projects\TakeHomeTasks\z3bro\ArmyServer.Tests\bin\Debug\net6.0\ArmyServer.pdb
+D:\Projects\TakeHomeTasks\z3bro\ArmyServer.Tests\bin\Debug\net6.0\Castle.Core.dll
+D:\Projects\TakeHomeTasks\z3bro\ArmyServer.Tests\bin\Debug\net6.0\Moq.dll
