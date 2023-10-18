@@ -86,7 +86,31 @@ namespace ArmyServer.Tests
             var reader = new StreamReader(responseStream);
             var jsonResponse = reader.ReadToEnd();
             _friendsServiceMock.Verify(service => service.AddFriend(It.IsAny<string>(), It.IsAny<Friend>()), Times.Once);
-        }
+        } 
+        
+        [Fact]
+        public void RemoveFriend_ValidData_RemovesFriend()
+        {
+            // Arrange
+            
+            var requestBody = JsonSerializer.Serialize(Friend1);
+            var requestStream = new MemoryStream(Encoding.UTF8.GetBytes(requestBody));
+            var responseStream = new MemoryStream();
+            _requestMock.Setup(req => req.InputStream).Returns(requestStream);
+            _requestMock.Setup(req => req.ContentEncoding).Returns(Encoding.UTF8);
+            _responseMock.Setup(resp => resp.OutputStream).Returns(responseStream);
 
+            _requestMock.Setup(req => req.Headers).Returns(new WebHeaderCollection
+            {
+                { "Authorization", AuthToken },
+                { "platform", Platform.ToString() },
+            });
+
+            // Act
+            _controller.RemoveFriend(_requestMock.Object, _responseMock.Object);
+
+            // Assert
+            _friendsServiceMock.Verify(service => service.RemoveFriend(It.IsAny<string>(), It.IsAny<string>()), Times.Once);
+        }
     }
 }
