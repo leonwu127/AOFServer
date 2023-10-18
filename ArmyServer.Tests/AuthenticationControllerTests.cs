@@ -22,21 +22,49 @@ namespace ArmyServer.Tests
     {
         private readonly Mock<IHttpListenerRequestWrapper> _requestMock;
         private readonly Mock<IHttpListenerResponseWrapper> _responseMock;
+        private readonly Mock<IDataRepository<string, Player>> _playersDataMock;
         private readonly AuthenticationController _controller;
-        private const GameTitle GameTitle = Models.GameTitle.ArmyofTactics;
+        private const GameTitle GameTitle = Models.GameTitle.ArmyOfTactics;
         private const Platform Platform = Models.Platform.iOS;
-        private readonly Uri _url = new Uri("http://localhost:8080/ArmyofTactics/login");
+        private readonly Uri _loginUrl = new Uri("http://localhost:8080/ArmyofTactics/login");
+        private readonly Uri _registerUrl = new Uri("http://localhost:8080/ArmyofTactics/register");
         private const string PlayerId = "player_id";
         private static readonly string Token = TokenUtility.GenerateToken(PlayerId);
 
 
         public AuthenticationControllerTests()
         {
+            _playersDataMock = new Mock<IDataRepository<string, Player>>();
             _requestMock = new Mock<IHttpListenerRequestWrapper>();
             _responseMock = new Mock<IHttpListenerResponseWrapper>();
-            _controller = new AuthenticationController();
-            PlayersData.Add(new Player(PlayerId));
+            _controller = new AuthenticationController(_playersDataMock.Object);
         }
+        
+        [Fact]
+        public void GuestRegister_ShouldReturnToken()
+        {
+            // Arrange
+            _requestMock.Setup(req => req.Url).Returns(_registerUrl);
+            _requestMock.Setup(req => req.Headers).Returns(new WebHeaderCollection
+            {
+                { "platform", Platform.ToString() }
+            });
+            _playersDataMock.Setup(playersData => playersData.Add(It.IsAny<string>(), It.IsAny<Player>()));
+
+            // Prepare the response mock to capture the response data for verification
+            var responseStream = new MemoryStream();
+            _responseMock.Setup(resp => resp.OutputStream).Returns(responseStream);
+
+            // Act
+            _controller.GuestRegister(_requestMock.Object, _responseMock.Object);
+
+            // Assert
+            responseStream.Position = 0;
+            var reader = new StreamReader(responseStream);
+            var jsonResponse = reader.ReadToEnd();
+            Assert.Contains("token", jsonResponse);
+        }
+        
 
         [Fact]
         public void Login_WithValidCredentials_ShouldReturnToken()
@@ -51,20 +79,16 @@ namespace ArmyServer.Tests
             };
             var requestBody = JsonSerializer.Serialize(authRequest);
             var requestStream = new MemoryStream(Encoding.UTF8.GetBytes(requestBody));
-            _requestMock.Setup(req => req.Url).Returns(_url);
+            var responseStream = new MemoryStream();
+            _requestMock.Setup(req => req.Url).Returns(_loginUrl);
             _requestMock.Setup(req => req.Headers).Returns(new WebHeaderCollection
             {
                 { "platform", Platform.ToString() }
             });
             _requestMock.Setup(req => req.InputStream).Returns(requestStream);
             _requestMock.Setup(req => req.ContentEncoding).Returns(Encoding.UTF8);
-
-            // You might need to set up more properties of the request based on how they're used in your Login method
-
-            // Prepare the response mock to capture the response data for verification
-            var responseStream = new MemoryStream();
             _responseMock.Setup(resp => resp.OutputStream).Returns(responseStream);
-
+            _playersDataMock.Setup(playersData => playersData.Get(PlayerId)).Returns(new Player(PlayerId));
             // Act
             _controller.Login(_requestMock.Object, _responseMock.Object);
 
@@ -72,7 +96,7 @@ namespace ArmyServer.Tests
             responseStream.Position = 0;
             var reader = new StreamReader(responseStream);
             var jsonResponse = reader.ReadToEnd();
-            Assert.Contains("token", jsonResponse); // Adjust based on how your token is included in the response
+            Assert.Contains("token", jsonResponse);
         }
     }
 }
