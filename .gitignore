@@ -30,4 +30,9 @@ ArmyServer.Tests/obj/
 .history
 .ionide
 
+# Intellij
+.idea
+*.iml
+*.iws
+
 # End of https://www.toptal.com/developers/gitignore/api/visualstudiocode
