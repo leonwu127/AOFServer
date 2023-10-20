@@ -100,8 +100,6 @@ D:\Projects\TakeHomeTasks\z3bro\ArmyServer.Tests\obj\Debug\net6.0\ref\ArmyServer
 D:\Projects\TakeHomeTasks\z3bro\ArmyServer.Tests\bin\Debug\net6.0\CoverletSourceRootsMapping
 D:\Projects\TakeHomeTasks\z3bro\ArmyServer.Tests\bin\Debug\net6.0\ArmyServer.deps.json
 D:\Projects\TakeHomeTasks\z3bro\ArmyServer.Tests\bin\Debug\net6.0\ArmyServer.runtimeconfig.json
-D:\Projects\TakeHomeTasks\z3bro\ArmyServer.Tests\bin\Debug\net6.0\appsettings.Development.json
-D:\Projects\TakeHomeTasks\z3bro\ArmyServer.Tests\bin\Debug\net6.0\appsettings.json
 D:\Projects\TakeHomeTasks\z3bro\ArmyServer.Tests\bin\Debug\net6.0\ArmyServer.exe
 D:\Projects\TakeHomeTasks\z3bro\ArmyServer.Tests\bin\Debug\net6.0\ArmyServer.dll
 D:\Projects\TakeHomeTasks\z3bro\ArmyServer.Tests\bin\Debug\net6.0\ArmyServer.pdb

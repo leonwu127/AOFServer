@@ -1,4 +1,5 @@
 using ArmyServer.Data;
+using ArmyServer.Excetions;
 using ArmyServer.Models;
 using ArmyServer.Services.Friends;
 using Moq;
@@ -51,16 +52,30 @@ public class FriendServiceTests
         // Arrange
         string playerId = "playerId";
         var newFriend = new Friend("friendId", "friendName");
-        List<Friend> friends = new List<Friend>();
+        List<Friend> friends = new List<Friend>{newFriend};
         _friendDataMock.Setup(f => f.Get(playerId)).Returns(friends);
         
         // Act
         _friendService.AddFriend(playerId, newFriend);
         
         // Assert
-        _friendDataMock.Verify(f => f.Set(playerId, friends), Times.Once);
+        _friendDataMock.Verify(f => f.Add(playerId, friends), Times.Once);
         Assert.Contains(newFriend, friends);
     }
+    
+    [Fact]
+    public void AddFriend_ValidPlayerIdAndExistingFriend_ShouldThrowExistingFriendException()
+    {
+        // Arrange
+        string playerId = "playerId";
+        var newFriend = new Friend("friendId", "friendName");
+        _friendDataMock.Setup(f => f.Exists(playerId)).Returns(true);
+        _friendDataMock.Setup(f => f.Get(playerId)).Returns(new List<Friend>{newFriend});
+        
+        // Act
+        Assert.Throws<AddExistingFriendException>(() => _friendService.AddFriend(playerId, newFriend));
+    }
+    
     
     [Fact]
     public void RemoveFriend_NullPlayerId_ShouldNotRemoveFriend()
@@ -109,5 +124,23 @@ public class FriendServiceTests
         Assert.True(actualResult);
         _friendDataMock.Verify(f => f.Set(playerId, friends), Times.Once);
         Assert.DoesNotContain(friendToRemove, friends);
+    }
+    
+    [Fact]
+    public void RemoveFriend_ValidPlayerIdAndInvalidFriendId_ShouldNotRemoveFriend()
+    {
+        // Arrange
+        string playerId = "playerId";
+        string friendId = "friendId";
+        var friendToRemove = new Friend("invalidFriendId", "friendName");
+        List<Friend> friends = new List<Friend> {friendToRemove};
+        _friendDataMock.Setup(f => f.Get(playerId)).Returns(friends);
+        
+        // Act
+        var actualResult = _friendService.RemoveFriend(playerId, friendId);
+        
+        // Assert
+        Assert.False(actualResult);
+        _friendDataMock.Verify(f => f.Set(It.IsAny<string>(), It.IsAny<List<Friend>>()), Times.Never);
     }
 }

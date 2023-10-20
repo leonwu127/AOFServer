@@ -47,6 +47,7 @@ namespace ArmyServer.Tests
             _requestMock.Setup(req => req.Url).Returns(_registerUrl);
             _requestMock.Setup(req => req.Headers).Returns(new WebHeaderCollection
             {
+                { "GameTitle", GameTitle.ToString() },
                 { "platform", Platform.ToString() }
             });
             _playersDataMock.Setup(playersData => playersData.Add(It.IsAny<string>(), It.IsAny<Player>()));
@@ -62,7 +63,8 @@ namespace ArmyServer.Tests
             responseStream.Position = 0;
             var reader = new StreamReader(responseStream);
             var jsonResponse = reader.ReadToEnd();
-            Assert.Contains("token", jsonResponse);
+            Assert.Contains("Id", jsonResponse);
+            Assert.Contains("Token", jsonResponse);
         }
         
 
@@ -83,12 +85,14 @@ namespace ArmyServer.Tests
             _requestMock.Setup(req => req.Url).Returns(_loginUrl);
             _requestMock.Setup(req => req.Headers).Returns(new WebHeaderCollection
             {
+                { "GameTitle", GameTitle.ToString() },
                 { "platform", Platform.ToString() }
             });
             _requestMock.Setup(req => req.InputStream).Returns(requestStream);
             _requestMock.Setup(req => req.ContentEncoding).Returns(Encoding.UTF8);
             _responseMock.Setup(resp => resp.OutputStream).Returns(responseStream);
             _playersDataMock.Setup(playersData => playersData.Get(PlayerId)).Returns(new Player(PlayerId));
+            
             // Act
             _controller.Login(_requestMock.Object, _responseMock.Object);
 
@@ -96,7 +100,8 @@ namespace ArmyServer.Tests
             responseStream.Position = 0;
             var reader = new StreamReader(responseStream);
             var jsonResponse = reader.ReadToEnd();
-            Assert.Contains("token", jsonResponse);
+            Assert.Contains(PlayerId, jsonResponse);
+            Assert.Contains(Token, jsonResponse);
         }
     }
 }
