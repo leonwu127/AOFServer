@@ -1,0 +1,194 @@
+{
+	"info": {
+		"_postman_id": "dea72fae-923c-403f-a493-956f45ed78cd",
+		"name": "ArmyServer",
+		"schema": "https://schema.getpostman.com/json/collection/v2.0.0/collection.json",
+		"_exporter_id": "2529140"
+	},
+	"item": [
+		{
+			"name": "Guest Register",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "platform",
+						"value": "iOS",
+						"type": "text"
+					},
+					{
+						"key": "GameTitle",
+						"value": "{{GameTitle}}",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": "http://localhost:8000/register"
+			},
+			"response": []
+		},
+		{
+			"name": "Login",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": {
+						"token": ""
+					}
+				},
+				"method": "POST",
+				"header": [
+					{
+						"key": "platform",
+						"value": "iOS",
+						"type": "text"
+					},
+					{
+						"key": "GameTitle",
+						"value": "{{GameTitle}}",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"Provider\": {\r\n    \"Guest\": {\r\n    \"Id\": \"Guest_c34f1084-5812-479d-b214-701141a219ac\",\r\n    \"Token\": \"9631652e0d47d35111a323156b063ad01ba098c99f577453e13537a7612d03ea\"\r\n    }\r\n  }\r\n}"
+				},
+				"url": "http://localhost:8000/login"
+			},
+			"response": []
+		},
+		{
+			"name": "Add Friend",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": {
+						"token": "1719215d27d61e8570c3cb7a8680a4f40ed78ef80260c8b146575ca0067f380d"
+					}
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"Id\": \"wz-4312173\",\r\n    \"Name\": \"Zhiqing Wu\"\r\n}"
+				},
+				"url": "http://localhost:8000/friends"
+			},
+			"response": []
+		},
+		{
+			"name": "Get Friends",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": {
+						"token": "20b3beb7ca2fc4bf2c94a65b372f87a62a763eda63ad81b76e7216bf3e9eec63"
+					}
+				},
+				"method": "GET",
+				"header": [],
+				"url": "http://localhost:8000/friends"
+			},
+			"response": []
+		},
+		{
+			"name": "Remove Friend",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": {
+						"token": "1ec07606d0b8502959094eee2120b5719fec77a2f42e0a37afda7b51b4cb247c"
+					}
+				},
+				"method": "DELETE",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"Id\": \"wz-4312173\",\r\n    \"Name\": \"Zhiqing Wu\"\r\n}"
+				},
+				"url": "http://localhost:8000/friends"
+			},
+			"response": []
+		},
+		{
+			"name": "Get Shop Items",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": {
+						"token": "1b963a2850ff8cd7e0d5bb39c1b04bb5c058d97d5a1a126df0bc400024e1761f"
+					}
+				},
+				"method": "GET",
+				"header": [],
+				"url": "http://localhost:8000/shop/items"
+			},
+			"response": []
+		},
+		{
+			"name": "Purchase Item",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": {
+						"token": "1b963a2850ff8cd7e0d5bb39c1b04bb5c058d97d5a1a126df0bc400024e1761f"
+					}
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"ItemId\": \"3\"\r\n}"
+				},
+				"url": "http://localhost:8000/shop/purchase"
+			},
+			"response": []
+		},
+		{
+			"name": "Get Top 100 Leaderboard",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": {
+						"token": "ae35cf4418ab6a5ea38fd4d534c6967e3bec8df87fa92bbc61b2a231b6cbc968"
+					}
+				},
+				"method": "GET",
+				"header": [],
+				"url": "http://localhost:8000/leaderboard/top100"
+			},
+			"response": []
+		},
+		{
+			"name": "Add or update leaderboard",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": {
+						"token": "ae35cf4418ab6a5ea38fd4d534c6967e3bec8df87fa92bbc61b2a231b6cbc968"
+					}
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"Id\": \"151\",\r\n    \"Name\": \"player151\",\r\n    \"Score\": 100000\r\n}"
+				},
+				"url": "http://localhost:8000/leaderboard"
+			},
+			"response": []
+		}
+	],
+	"variable": [
+		{
+			"key": "GameTitle",
+			"value": "ArmyOfTactics"
+		}
+	]
+}
