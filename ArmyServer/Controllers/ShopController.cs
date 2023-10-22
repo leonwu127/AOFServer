@@ -1,5 +1,6 @@
 ﻿using System.Net;
 using System.Text.Json;
+using ArmyServer.Models;
 using ArmyServer.Models.Response;
 using ArmyServer.Services.Shop;
 using ArmyServer.Utilities.HttpListenserWrapper;
@@ -38,17 +39,20 @@ namespace ArmyServer.Controllers
                 return;
             }
 
-            var requestBody = DeserializeRequestBody(req); 
-            string itemId = requestBody["itemId"];
-
-            bool purchaseSuccessful = _shopService.PurchaseShopItem(playerId, itemId);
-            if (purchaseSuccessful)
+            if (TryExtractShopItem(req, out ShopItem? shopItem))
             {
-                SendResponse(resp, String.Empty, HttpStatusCode.OK);
+                if (_shopService.PurchaseShopItem(playerId, shopItem.ItemId))
+                {
+                    SendResponse(resp, String.Empty, HttpStatusCode.OK);
+                } 
+                else
+                {
+                    SendError(resp, "Purchase failed.", HttpStatusCode.BadRequest);
+                }
             }
             else
             {
-                SendError(resp, "Purchase failed.", HttpStatusCode.BadRequest);
+                SendError(resp, "Failed to parse shop item.", HttpStatusCode.BadRequest);
             }
         }
     }

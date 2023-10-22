@@ -58,11 +58,29 @@ public static class HttpUtility
         return requestBody;
     }
     
-    public static Dictionary<string, string> DeserializeRequestBody(IHttpListenerRequestWrapper req)
+    public static bool TryExtractPlayerScore(IHttpListenerRequestWrapper req, out PlayerScore? playerScore)
     {
-        string requestBody;
-        using (var reader = new StreamReader(req.InputStream, req.ContentEncoding))
-        { requestBody = reader.ReadToEnd(); }
-        return System.Text.Json.JsonSerializer.Deserialize<Dictionary<string, string>>(requestBody);
+        string requestBody= ExtractRequestBody(req);
+        var parsedBody = System.Text.Json.JsonSerializer.Deserialize<PlayerScore>(requestBody);
+        if (parsedBody != null)
+        {
+            playerScore = parsedBody;
+            return true;
+        }
+        playerScore = null;
+        return false;
+    }
+    
+    public static bool TryExtractShopItem(IHttpListenerRequestWrapper req, out ShopItem? shopItem)
+    {
+        string requestBody= ExtractRequestBody(req);
+        var parsedBody = System.Text.Json.JsonSerializer.Deserialize<ShopItem>(requestBody);
+        if (parsedBody != null)
+        {
+            shopItem = parsedBody;
+            return true;
+        }
+        shopItem = null;
+        return false;
     }
 }

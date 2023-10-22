@@ -1,5 +1,6 @@
 ﻿using System.Net;
 using System.Text.Json;
+using ArmyServer.Models;
 using ArmyServer.Models.Response;
 using ArmyServer.Services.Leaderboard;
 using ArmyServer.Utilities.HttpListenserWrapper;
@@ -38,17 +39,16 @@ namespace ArmyServer.Controllers
                 SendError(resp, "Unauthorized request.", HttpStatusCode.Unauthorized);
                 return;
             }
-            var body = DeserializeRequestBody(req);
-            int newScore = int.Parse(body["newScore"]);
-            string name = body["name"];
-            string id = body["id"];
-            if (id != playerId)
+            
+            if (TryExtractPlayerScore(req, out PlayerScore? playerScore))
             {
-                SendError(resp, "Unauthorized request.", HttpStatusCode.Unauthorized);
-                return;
+                _leaderboardService.AddOrUpdatePlayerScore(playerId, playerScore!.Name, playerScore.Score);
+                SendResponse(resp, String.Empty, HttpStatusCode.OK);
             }
-            _leaderboardService.AddOrUpdatePlayerScore(playerId, name, newScore);
-            SendResponse(resp, String.Empty, HttpStatusCode.OK);
+            else
+            {
+                SendError(resp, "Failed to parse player score.", HttpStatusCode.BadRequest);
+            }
         }
     }
 }
