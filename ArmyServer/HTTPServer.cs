@@ -19,10 +19,11 @@ namespace ArmyServer
         public static IConfiguration Configuration { get; private set; }
         // Controllers
         private static readonly ShopRepository ShopRepository = new();
+        private static readonly LeaderboardRepository LeaderboardRepository = new();
         private static readonly AuthenticationController AuthController = new(new PlayerRepository());
         private static readonly ShopController ShopController = new (new ShopService(ShopRepository, new PlayerRepository()));
         private static readonly FriendsController FriendsController = new (new FriendsService(new FriendRepository()));
-        private static readonly LeaderboardController LeaderboardController = new(new LeaderboardService(new LeaderboardRepository()));
+        private static readonly LeaderboardController LeaderboardController = new(new LeaderboardService(LeaderboardRepository));
         public HttpServer()
         {
             var builder = new ConfigurationBuilder()
@@ -37,6 +38,12 @@ namespace ArmyServer
             ShopRepository.Add("2",new ShopItem("2", "Cash 300", 999999, 4.99m));
             ShopRepository.Add("3",new ShopItem("3", "Cash 600", 999999, 9.99m));
             ShopRepository.Add("4",new ShopItem("4", "Cash 1200", 999999, 19.99m));
+            
+            // add 200 player scores to leaderboard
+            for (int i = 0; i < 200; i++)
+            {
+                LeaderboardRepository.Add(i.ToString(), new PlayerScore(i.ToString(), $"player{i}", i*100));
+            }
         }
 
         public static async Task HandleIncomingConnections()

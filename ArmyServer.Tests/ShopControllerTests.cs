@@ -75,7 +75,7 @@ public class ShopControllerTests
         _requestMock.Setup(req => req.HttpMethod).Returns("POST");
         _requestMock.Setup(req => req.InputStream).Returns(new MemoryStream(UTF8.GetBytes(JsonSerializer.Serialize(new Dictionary<string, string>
         {
-            { "itemId", ShopItem1.ItemId }
+            { "ItemId", ShopItem1.ItemId }
         }))));
         _shopServiceMock.Setup(service => service.PurchaseShopItem(It.IsAny<string>(), It.IsAny<string>())).Returns(true);
         

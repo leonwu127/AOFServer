@@ -42,7 +42,7 @@ namespace ArmyServer.Controllers
             
             if (TryExtractPlayerScore(req, out PlayerScore? playerScore))
             {
-                _leaderboardService.AddOrUpdatePlayerScore(playerId, playerScore!.Name, playerScore.Score);
+                _leaderboardService.AddOrUpdatePlayerScore(playerScore.Id, playerScore!.Name, playerScore.Score);
                 SendResponse(resp, String.Empty, HttpStatusCode.OK);
             }
             else
