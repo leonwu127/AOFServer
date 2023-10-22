@@ -1,18 +1,12 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Text;
 using Xunit;
 using Moq;
 using ArmyServer.Controllers;
 using ArmyServer.Utilities.HttpListenserWrapper;
 using System.Net;
-using System.Security.Principal;
 using ArmyServer.Services.Auth;
 using System.Text.Json;
 using ArmyServer.Models;
-using ArmyServer.Services.Auth.Provider;
 using ArmyServer.Data;
 using ArmyServer.Utilities;
 

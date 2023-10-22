@@ -5676,11 +5676,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "D:\\Projects\\TakeHomeTasks\\z3bro\\ArmyServer.Tests\\ArmyServer.Tests.csproj",
+      "projectUniqueName": "D:\\Projects\\TakeHomeTasks\\ArmyServer\\ArmyServer.Tests\\ArmyServer.Tests.csproj",
       "projectName": "ArmyServer.Tests",
-      "projectPath": "D:\\Projects\\TakeHomeTasks\\z3bro\\ArmyServer.Tests\\ArmyServer.Tests.csproj",
+      "projectPath": "D:\\Projects\\TakeHomeTasks\\ArmyServer\\ArmyServer.Tests\\ArmyServer.Tests.csproj",
       "packagesPath": "C:\\Users\\leonw\\.nuget\\packages\\",
-      "outputPath": "D:\\Projects\\TakeHomeTasks\\z3bro\\ArmyServer.Tests\\obj\\",
+      "outputPath": "D:\\Projects\\TakeHomeTasks\\ArmyServer\\ArmyServer.Tests\\obj\\",
       "projectStyle": "PackageReference",
       "configFilePaths": [
         "C:\\Users\\leonw\\AppData\\Roaming\\NuGet\\NuGet.Config",
@@ -5697,8 +5697,8 @@
         "net6.0": {
           "targetAlias": "net6.0",
           "projectReferences": {
-            "D:\\Projects\\TakeHomeTasks\\z3bro\\ArmyServer\\ArmyServer.csproj": {
-              "projectPath": "D:\\Projects\\TakeHomeTasks\\z3bro\\ArmyServer\\ArmyServer.csproj"
+            "D:\\Projects\\TakeHomeTasks\\ArmyServer\\ArmyServer\\ArmyServer.csproj": {
+              "projectPath": "D:\\Projects\\TakeHomeTasks\\ArmyServer\\ArmyServer\\ArmyServer.csproj"
             }
           }
         }

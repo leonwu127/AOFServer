@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "f5gx5DV5iTsCY/DtCM5mVri9Qafm8K0bNhDM/kDv14B/CkrhzOzg8C03r6AMppkGWjBCnIBlFJ5j1fW4kPqP2g==",
+  "dgSpecHash": "rMGMr4gvLwh2y7Ep2XMf2E0EnogamsnKcOJRvGN01xpddJ7M8mc3bFet6F66uMiRi+2QjWJIlZshjHNdNQBT2Q==",
   "success": true,
-  "projectFilePath": "D:\\Projects\\TakeHomeTasks\\z3bro\\ArmyServer.Tests\\ArmyServer.Tests.csproj",
+  "projectFilePath": "D:\\Projects\\TakeHomeTasks\\ArmyServer\\ArmyServer.Tests\\ArmyServer.Tests.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\leonw\\.nuget\\packages\\castle.core\\5.1.1\\castle.core.5.1.1.nupkg.sha512",
     "C:\\Users\\leonw\\.nuget\\packages\\coverlet.collector\\3.2.0\\coverlet.collector.3.2.0.nupkg.sha512",
@@ -96,8 +96,8 @@
     "C:\\Users\\leonw\\.nuget\\packages\\xunit.extensibility.core\\2.4.2\\xunit.extensibility.core.2.4.2.nupkg.sha512",
     "C:\\Users\\leonw\\.nuget\\packages\\xunit.extensibility.execution\\2.4.2\\xunit.extensibility.execution.2.4.2.nupkg.sha512",
     "C:\\Users\\leonw\\.nuget\\packages\\xunit.runner.visualstudio\\2.4.5\\xunit.runner.visualstudio.2.4.5.nupkg.sha512",
-    "C:\\Users\\leonw\\.nuget\\packages\\microsoft.windowsdesktop.app.ref\\6.0.23\\microsoft.windowsdesktop.app.ref.6.0.23.nupkg.sha512",
     "C:\\Users\\leonw\\.nuget\\packages\\microsoft.netcore.app.ref\\6.0.23\\microsoft.netcore.app.ref.6.0.23.nupkg.sha512",
+    "C:\\Users\\leonw\\.nuget\\packages\\microsoft.windowsdesktop.app.ref\\6.0.23\\microsoft.windowsdesktop.app.ref.6.0.23.nupkg.sha512",
     "C:\\Users\\leonw\\.nuget\\packages\\microsoft.aspnetcore.app.ref\\6.0.23\\microsoft.aspnetcore.app.ref.6.0.23.nupkg.sha512"
   ],
   "logs": []
