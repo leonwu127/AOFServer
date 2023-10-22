@@ -1,6 +1,7 @@
 using ArmyServer.Excetions;
 using ArmyServer.Models;
 using ArmyServer.Services.Auth;
+using ArmyServer.Services.Shop;
 using ArmyServer.Utilities.HttpListenserWrapper;
 
 namespace ArmyServer.Utilities.HttpUtilities;
@@ -71,16 +72,16 @@ public static class HttpUtility
         return false;
     }
     
-    public static bool TryExtractShopItem(IHttpListenerRequestWrapper req, out ShopItem? shopItem)
+    public static bool TryExtractShopItemId(IHttpListenerRequestWrapper req, out string? itemId)
     {
         string requestBody= ExtractRequestBody(req);
-        var parsedBody = System.Text.Json.JsonSerializer.Deserialize<ShopItem>(requestBody);
-        if (parsedBody != null)
+        var itemRequest = System.Text.Json.JsonSerializer.Deserialize<PurchaseItemRequest>(requestBody);
+        if (itemRequest != null)
         {
-            shopItem = parsedBody;
+            itemId = itemRequest.ItemId;
             return true;
         }
-        shopItem = null;
+        itemId = null;
         return false;
     }
 }

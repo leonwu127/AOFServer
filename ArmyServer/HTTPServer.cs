@@ -5,6 +5,7 @@ using System.Text;
 using System.Text.Json;
 using ArmyServer.Data;
 using ArmyServer.Excetions;
+using ArmyServer.Models;
 using ArmyServer.Services.Friends;
 using ArmyServer.Services.Leaderboard;
 using ArmyServer.Services.Shop;
@@ -17,8 +18,9 @@ namespace ArmyServer
         public static string url = "http://localhost:8000/";
         public static IConfiguration Configuration { get; private set; }
         // Controllers
+        private static readonly ShopRepository ShopRepository = new();
         private static readonly AuthenticationController AuthController = new(new PlayerRepository());
-        private static readonly ShopController ShopController = new (new ShopService(new ShopRepository(), new PlayerRepository()));
+        private static readonly ShopController ShopController = new (new ShopService(ShopRepository, new PlayerRepository()));
         private static readonly FriendsController FriendsController = new (new FriendsService(new FriendRepository()));
         private static readonly LeaderboardController LeaderboardController = new(new LeaderboardService(new LeaderboardRepository()));
         public HttpServer()
@@ -26,12 +28,22 @@ namespace ArmyServer
             var builder = new ConfigurationBuilder()
                 .AddJsonFile("appsettings.json", optional: false, reloadOnChange: true);
             Configuration = builder.Build();
+
         }
-        
+
+        private static void SetUpRepositories()
+        {
+            ShopRepository.Add("1",new ShopItem("1", "Cash 60", 999999, 0.99m));
+            ShopRepository.Add("2",new ShopItem("2", "Cash 300", 999999, 4.99m));
+            ShopRepository.Add("3",new ShopItem("3", "Cash 600", 999999, 9.99m));
+            ShopRepository.Add("4",new ShopItem("4", "Cash 1200", 999999, 19.99m));
+        }
+
         public static async Task HandleIncomingConnections()
         {
             bool runServer = true;
-
+            SetUpRepositories();
+            
             // While a user hasn't visited the `shutdown` url, keep on handling requests
             while (runServer)
             {

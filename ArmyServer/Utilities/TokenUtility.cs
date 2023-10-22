@@ -10,7 +10,7 @@ namespace ArmyServer.Utilities
         private static readonly string SecretKey = "YOUR_SECRET_KEY_HERE";
 
         // A dictionary to store tokens and associated player IDs for validation purposes.
-        private static Dictionary<string, string> tokenStore = new Dictionary<string, string>();
+        private static Dictionary<string, string> tokenStore = new();
 
         public static string GenerateToken(string playerId)
         {

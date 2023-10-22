@@ -4,34 +4,35 @@ namespace ArmyServer.Data;
 
 public class ShopRepository : IDataRepository<string, ShopItem>
 {
-    private readonly Dictionary<string, ShopItem> _shopItems;
+    private static readonly Dictionary<string, ShopItem> ShopItems = new();
+
     public void Add(string id, ShopItem model)
     {
-        _shopItems.Add(id, model);
+        ShopItems.Add(id, model);
     }
 
     public void Set(string key, ShopItem model)
     {
-        _shopItems[key] = model;
+        ShopItems[key] = model;
     }
 
     public ShopItem Get(string key)
     {
-        return _shopItems[key];
+        return ShopItems[key];
     }
 
     public List<ShopItem> GetAll()
     {
-        return _shopItems.Values.ToList();
+        return ShopItems.Values.ToList();
     }
 
     public bool Remove(string key)
     {
-        return _shopItems.Remove(key);
+        return ShopItems.Remove(key);
     }
 
     public bool Exists(string key)
     {
-        return _shopItems.ContainsKey(key);
+        return ShopItems.ContainsKey(key);
     }
 }

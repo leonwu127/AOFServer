@@ -17,6 +17,7 @@ namespace ArmyServer.Services.Auth.Provider
         {
             // Generate a new player id, UUID
             Player newPlayer = new Player($"Guest_{Guid.NewGuid().ToString()}");
+            newPlayer.Gold = 1000;
             PlayersData.Add(newPlayer.Id, newPlayer);
 
             return newPlayer;

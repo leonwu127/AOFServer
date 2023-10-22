@@ -39,9 +39,9 @@ namespace ArmyServer.Controllers
                 return;
             }
 
-            if (TryExtractShopItem(req, out ShopItem? shopItem))
+            if (TryExtractShopItemId(req, out string? itemId))
             {
-                if (_shopService.PurchaseShopItem(playerId, shopItem.ItemId))
+                if (_shopService.PurchaseShopItem(playerId, itemId))
                 {
                     SendResponse(resp, String.Empty, HttpStatusCode.OK);
                 } 

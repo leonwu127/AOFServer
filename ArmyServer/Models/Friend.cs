@@ -10,7 +10,5 @@ namespace ArmyServer.Models
             Id = id;
             Name = name;
         }
-
-        // You can include other methods, properties, or functionality as needed here.
     }
 }
