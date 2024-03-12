@@ -1,6 +1,5 @@
 ﻿using System.Net;
 using System.Text.Json;
-using TinyGameServer.Models;
 using TinyGameServer.Models.Response;
 using TinyGameServer.Services.Shop;
 using TinyGameServer.Utilities.HttpListenserWrapper;
