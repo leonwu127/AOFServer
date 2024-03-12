@@ -24,7 +24,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\ArmyServer\ArmyServer.csproj" />
+    <ProjectReference Include="..\TinyGameServer\TinyGameServer.csproj" />
   </ItemGroup>
 
 </Project>

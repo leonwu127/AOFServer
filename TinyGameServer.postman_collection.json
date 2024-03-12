@@ -1,7 +1,7 @@
 {
 	"info": {
 		"_postman_id": "dea72fae-923c-403f-a493-956f45ed78cd",
-		"name": "ArmyServer",
+		"name": "TinyGameServer",
 		"schema": "https://schema.getpostman.com/json/collection/v2.0.0/collection.json",
 		"_exporter_id": "2529140"
 	},
