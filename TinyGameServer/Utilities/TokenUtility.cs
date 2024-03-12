@@ -1,4 +1,5 @@
-﻿using System.Security.Cryptography;
+﻿using System.Collections.Concurrent;
+using System.Security.Cryptography;
 using System.Text;
 using TinyGameServer.Utilities.HttpListenserWrapper;
 
@@ -10,7 +11,7 @@ namespace TinyGameServer.Utilities
         private static readonly string SecretKey = "YOUR_SECRET_KEY_HERE";
 
         // A dictionary to store tokens and associated player IDs for validation purposes.
-        private static Dictionary<string, string> tokenStore = new();
+        private static ConcurrentDictionary<string, string> tokenStore = new();
 
         public static string GenerateToken(string playerId)
         {
@@ -19,7 +20,7 @@ namespace TinyGameServer.Utilities
             var token = ComputeSha256Hash(tokenInput);
 
             // Store the token and associated player ID for future validation.
-            tokenStore[token] = playerId;
+            tokenStore.AddOrUpdate(token, playerId, (key, oldValue) => playerId);
 
             return token;
         }
