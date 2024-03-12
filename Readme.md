@@ -1,7 +1,7 @@
-# ArmyServer
+# TinyGameServer
 
 ## Overview
-ArmyServer is a backend service designed to provide essential functionalities for online multiplayer games. It includes services such as player authentication, a friend system, leaderboards, and an in-game shop.
+TinyGameServer is a backend service designed to provide essential functionalities for online multiplayer games. It includes services such as player authentication, a friend system, leaderboards, and an in-game shop.
 
 ## Features
 - **Authentication System**: Manage player authentication to maintain secure player sessions.
@@ -45,7 +45,7 @@ dotnet test
 - **ShopItem**: The shop item table stores item information. It stores the item's name and price.
 
 ### API Endpoints
-- **Postman Collection**: The Postman collection for the API endpoints can be found in the project directory: ArmyServer.postman_collection.json
+- **Postman Collection**: The Postman collection for the API endpoints can be found in the project directory: TinyGameServer.postman_collection.json
 - **How to test endpoints**: To test the endpoints, import the Postman collection into Postman and run the collection.
 - The collection contains the following requests:
     - **Authentication System**

@@ -12,12 +12,12 @@
 
 ### Visual Stuiod ###
 .vs/
-ArmyServer/.vs/
-ArmyServer/bin/
-ArmyServer/obj/
-ArmyServer.Tests/.vs/
-ArmyServer.Tests/bin/
-ArmyServer.Tests/obj/
+TinyGameServer/.vs/
+TinyGameServer/bin/
+TinyGameServer/obj/
+TinyGameServer.Tests/.vs/
+TinyGameServer.Tests/bin/
+TinyGameServer.Tests/obj/
 
 # Local History for Visual Studio Code
 .history/
@@ -34,6 +34,6 @@ ArmyServer.Tests/obj/
 .idea
 *.iml
 *.iws
-ArmyServer/.idea
+TinyGameServer/.idea
 
 # End of https://www.toptal.com/developers/gitignore/api/visualstudiocode
