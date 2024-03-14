@@ -2,6 +2,7 @@
 using TinyGameServer.Models;
 using System.Net;
 using System.Text.Json;
+using Microsoft.AspNetCore.Mvc;
 using TinyGameServer.Data;
 using TinyGameServer.Models.Response;
 using TinyGameServer.Services.Auth;
@@ -13,7 +14,9 @@ using static TinyGameServer.Utilities.HttpUtilities.HttpUtility;
 
 namespace TinyGameServer.Controllers
 {
-    public class AuthenticationController
+    [ApiController]
+    [Route("[controller]")]
+    public class AuthenticationController : ControllerBase
     {
         private readonly IDataRepository<string, Player> _playersData;
 
@@ -25,7 +28,7 @@ namespace TinyGameServer.Controllers
         
         private static readonly HashSet<GameTitle> SupportedGameTitles = new HashSet<GameTitle>
         {
-            GameTitle.ArmyOfTactics
+            GameTitle.TinyGame
         };
 
         private static readonly HashSet<Platform> SupportedPlatforms = new HashSet<Platform>
@@ -33,7 +36,6 @@ namespace TinyGameServer.Controllers
             Platform.iOS,
             Platform.Android
         };
-        
         
         
         public void GuestRegister(IHttpListenerRequestWrapper req, IHttpListenerResponseWrapper resp)

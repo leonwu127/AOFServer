@@ -2,6 +2,6 @@
 {
     public enum GameTitle
     {
-        ArmyOfTactics,
+        TinyGame,
     }
 }

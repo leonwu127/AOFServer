@@ -18,7 +18,7 @@ public class ShopControllerTests
     private readonly Mock<IHttpListenerRequestWrapper> _requestMock;
     private readonly Mock<IHttpListenerResponseWrapper> _responseMock;
     private const string PlayerId = "player_id";
-    private const GameTitle GameTitle = Models.GameTitle.ArmyOfTactics;
+    private const GameTitle GameTitle = Models.GameTitle.TinyGame;
     private const Platform Platform = Models.Platform.iOS;
     private static readonly string Token = TokenUtility.GenerateToken(PlayerId);
     private static readonly string AuthToken = "Bearer " + Token;

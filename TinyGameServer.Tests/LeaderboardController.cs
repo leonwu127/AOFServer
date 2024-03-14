@@ -22,7 +22,7 @@ public class LeaderboardControllerTests
     private const string PlayerName = "player_name";
     private const int Score = 100;
     private static readonly PlayerScore PlayerScore1 = new(PlayerId, PlayerName, Score);
-    private const GameTitle GameTitle = Models.GameTitle.ArmyOfTactics;
+    private const GameTitle GameTitle = Models.GameTitle.TinyGame;
     private const Platform Platform = Models.Platform.iOS;
     private static readonly string Token = TokenUtility.GenerateToken(PlayerId);
     private static readonly string AuthToken = "Bearer " + Token;

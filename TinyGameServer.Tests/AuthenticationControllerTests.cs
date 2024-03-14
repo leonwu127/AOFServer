@@ -18,7 +18,7 @@ namespace TinyGameServer.Tests
         private readonly Mock<IHttpListenerResponseWrapper> _responseMock;
         private readonly Mock<IDataRepository<string, Player>> _playersDataMock;
         private readonly AuthenticationController _controller;
-        private const GameTitle GameTitle = Models.GameTitle.ArmyOfTactics;
+        private const GameTitle GameTitle = Models.GameTitle.TinyGame;
         private const Platform Platform = Models.Platform.iOS;
         private readonly Uri _loginUrl = new Uri("http://localhost:8080/ArmyofTactics/login");
         private readonly Uri _registerUrl = new Uri("http://localhost:8080/ArmyofTactics/register");
