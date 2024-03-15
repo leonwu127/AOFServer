@@ -15,7 +15,7 @@ using static TinyGameServer.Utilities.HttpUtilities.HttpUtility;
 namespace TinyGameServer.Controllers
 {
     [ApiController]
-    [Route("[controller]")]
+    [Route("api/auth")]
     public class AuthenticationController : ControllerBase
     {
         private readonly IDataRepository<string, Player> _playersData;
@@ -38,26 +38,20 @@ namespace TinyGameServer.Controllers
         };
         
         
-        public void GuestRegister(IHttpListenerRequestWrapper req, IHttpListenerResponseWrapper resp)
+        [HttpGet("guest")]
+        public ActionResult<AuthResponse> GuestRegister()
         {
-            if (!ValidateRequest(req, resp, out string msg))
-            { SendError(resp, msg, HttpStatusCode.BadRequest); return; }
-
             GuestAuthentication authenticator = new GuestAuthentication(_playersData);
             var player = authenticator.Authenticate();
             var serverToken = TokenUtility.GenerateToken(player.Id);
-            var authResponseJson = JsonSerializer.Serialize(new AuthResponse(player.Id, serverToken));
-            SendResponse(resp, authResponseJson, HttpStatusCode.OK);
+            return Ok(new AuthResponse(player.Id, serverToken));
         }
 
-        public void Login(IHttpListenerRequestWrapper req, IHttpListenerResponseWrapper resp)
+        [HttpPost("login")]
+        public ActionResult<AuthResponse> Login(AuthRequest req)
         {
-            if (!ValidateRequest(req, resp, out string msg))
-            { SendError(resp, msg, HttpStatusCode.BadRequest); return; }
-
-            if (!TryExtractAuthCredential(req, out string provider, out AuthCredential authCredential, out msg))
-            { SendError(resp, msg, HttpStatusCode.BadRequest); return; }
-
+            var provider = req.Provider.Keys.First();
+            
             IAuthentication authenticator;
             switch (provider)
             {
@@ -65,15 +59,15 @@ namespace TinyGameServer.Controllers
                 case "Guest":
                     authenticator = new GuestAuthentication(_playersData); break;
                 default:
-                    SendError(resp, "Invalid authentication provider.", HttpStatusCode.BadRequest); return;
+                    return BadRequest("Invalid authentication provider.");
             }
 
+            var authCredential = req.Provider[provider];
             if (!authenticator.Authenticate(authCredential, out Player player)) 
-            { SendError(resp, "Login failed.", HttpStatusCode.Unauthorized); return; }
+            { return Unauthorized("Failed to authenticate player."); }
 
             var serverToken = TokenUtility.GenerateToken(player.Id);
-            var authResponseJson = JsonSerializer.Serialize(new AuthResponse(player.Id, serverToken));
-            SendResponse(resp, authResponseJson, HttpStatusCode.OK);
+            return Ok(new AuthResponse(player.Id, serverToken));
         }
 
         private bool ValidateRequest(IHttpListenerRequestWrapper req, IHttpListenerResponseWrapper resp, out string message)

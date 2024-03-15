@@ -67,27 +67,14 @@ namespace TinyGameServer
                 Console.WriteLine(req.UserHostName);
                 Console.WriteLine(req.UserAgent);
                 Console.WriteLine();
-
-
-                if (req.Url.AbsolutePath == "/register" && req.HttpMethod == "GET")
-                {
-                    AuthController.GuestRegister(req, resp);
-                }
-                else if (req.Url.AbsolutePath == "/login" && req.HttpMethod == "POST")
-                {
-                    AuthController.Login(req, resp);
-                }
-                else if (req.Url.AbsolutePath == "/shop/items" && req.HttpMethod == "GET")
+                
+                if (req.Url.AbsolutePath == "/shop/items" && req.HttpMethod == "GET")
                 {
                     ShopController.GetShopItems(req, resp);
                 }
                 else if (req.Url.AbsolutePath == "/shop/purchase" && req.HttpMethod == "POST")
                 {
                     ShopController.PurchaseItem(req, resp);
-                }
-                else if (req.Url.AbsolutePath.StartsWith("/friends") && req.HttpMethod == "GET")
-                {
-                    FriendsController.GetFriends(req, resp);
                 }
                 else if (req.Url.AbsolutePath == "/friends" && req.HttpMethod == "POST")
                 {

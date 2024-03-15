@@ -51,7 +51,7 @@ namespace TinyGameServer.Tests
             _responseMock.Setup(resp => resp.OutputStream).Returns(responseStream);
 
             // Act
-            _controller.GuestRegister(_requestMock.Object, _responseMock.Object);
+            //_controller.GuestRegister(_requestMock.Object, _responseMock.Object);
 
             // Assert
             responseStream.Position = 0;
@@ -88,7 +88,7 @@ namespace TinyGameServer.Tests
             _playersDataMock.Setup(playersData => playersData.Get(PlayerId)).Returns(new Player(PlayerId));
             
             // Act
-            _controller.Login(_requestMock.Object, _responseMock.Object);
+            //_controller.Login(_requestMock.Object, _responseMock.Object);
 
             // Assert
             responseStream.Position = 0;

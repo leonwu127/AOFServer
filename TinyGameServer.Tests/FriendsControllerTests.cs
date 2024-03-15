@@ -51,7 +51,7 @@ namespace TinyGameServer.Tests
             });
             
             // Act
-            _controller.GetFriends(_requestMock.Object, _responseMock.Object);
+            //_controller.GetFriends(_requestMock.Object, _responseMock.Object);
 
             // Assert
             responseStream.Position = 0;

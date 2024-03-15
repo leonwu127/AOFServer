@@ -1,5 +1,6 @@
 ﻿using System.Net;
 using System.Text.Json;
+using Microsoft.AspNetCore.Mvc;
 using TinyGameServer.Excetions;
 using TinyGameServer.Models;
 using TinyGameServer.Services.Friends;
@@ -11,6 +12,8 @@ using static TinyGameServer.Utilities.HttpUtilities.HttpUtility;
 namespace TinyGameServer.Controllers
 {
     
+    [ApiController]
+    [Route("api/friends")]
     public class FriendsController
     {
         private readonly IFriendsService _friendsService;
@@ -20,15 +23,18 @@ namespace TinyGameServer.Controllers
             _friendsService = friendsService;
         }
         
-        public void GetFriends(IHttpListenerRequestWrapper req, IHttpListenerResponseWrapper resp)
+        [HttpGet]
+        public ActionResult<FriendResponse> GetFriends()
         {
-            if (!TokenIsValid(req, out string playerId))
-            { SendError(resp, "Unauthorized request.", HttpStatusCode.Unauthorized); return; }
+            // validate token
 
-            List<Friend> friendsList = _friendsService.GetFriends(playerId)!;
-
-            var response = JsonSerializer.Serialize(new FriendResponse(friendsList));
-            SendResponse(resp, response, HttpStatusCode.OK);
+            // if (!TokenIsValid(req, out string playerId))
+            // { SendError(resp, "Unauthorized request.", HttpStatusCode.Unauthorized); return; }
+            //
+            // List<Friend> friendsList = _friendsService.GetFriends(playerId)!;
+            //
+            // var response = JsonSerializer.Serialize(new FriendResponse(friendsList));
+            // SendResponse(resp, response, HttpStatusCode.OK);
         }
 
         public void AddFriend(IHttpListenerRequestWrapper req, IHttpListenerResponseWrapper resp)
